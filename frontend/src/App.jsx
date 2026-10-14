@@ -1,10 +1,12 @@
-﻿import { Navigate, Route, Routes } from "react-router-dom";
+﻿
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import AppLayout from "./layouts/AppLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./features/auth/pages/LoginPage";
 import DashboardPage from "./features/dashboard/pages/DashboardPage";
 import AdminDashboardPage from "./features/admin/pages/AdminDashboardPage";
+import AttendancePage from "./features/attendance/pages/AttendancePage";
 
 function FeaturePlaceholder({ title }) {
   return (
@@ -13,9 +15,12 @@ function FeaturePlaceholder({ title }) {
         <div>
           <p className="eyebrow">PEOPLEFIRST HRMS</p>
           <h1>{title}</h1>
-          <p className="muted">Your dedicated {title.toLowerCase()} workspace.</p>
+          <p className="muted">
+            Your dedicated {title.toLowerCase()} workspace.
+          </p>
         </div>
       </section>
+
       <section className="content-card">
         <h2>{title}</h2>
         <p className="muted">
@@ -28,7 +33,6 @@ function FeaturePlaceholder({ title }) {
 
 const features = [
   { path: "employees", title: "Employees", roles: ["admin", "hr"] },
-  { path: "attendance", title: "Attendance", roles: ["admin", "hr", "employee"] },
   { path: "leaves", title: "Leave Management", roles: ["admin", "hr", "employee"] },
   { path: "payroll", title: "Payroll", roles: ["admin", "hr"] },
   { path: "salary-slips", title: "Salary Slips", roles: ["admin", "hr", "employee"] },
@@ -59,6 +63,15 @@ export default function App() {
           element={
             <ProtectedRoute roles={["admin"]}>
               <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="attendance"
+          element={
+            <ProtectedRoute roles={["admin", "hr", "employee"]}>
+              <AttendancePage />
             </ProtectedRoute>
           }
         />
