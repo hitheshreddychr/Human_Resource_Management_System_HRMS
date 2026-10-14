@@ -1,4 +1,5 @@
-﻿import {
+﻿
+import {
   createContext,
   useContext,
   useMemo,
@@ -23,20 +24,13 @@ export function AuthProvider({ children }) {
   });
 
   async function login(email, password) {
-    const body = new URLSearchParams();
-    body.append("username", email);
-    body.append("password", password);
-
-    const response = await api.post("/auth/login", body, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+    // The backend expects JSON: { email, password }.
+    const response = await api.post("/auth/login", {
+      email,
+      password,
     });
 
     const accessToken = response.data.access_token;
-
-    localStorage.setItem("hrms_access_token", accessToken);
-    setToken(accessToken);
 
     const userResponse = await api.get("/auth/me", {
       headers: {
@@ -44,13 +38,18 @@ export function AuthProvider({ children }) {
       },
     });
 
+    const loggedInUser = userResponse.data;
+
+    localStorage.setItem("hrms_access_token", accessToken);
     localStorage.setItem(
       "hrms_user",
-      JSON.stringify(userResponse.data)
+      JSON.stringify(loggedInUser)
     );
 
-    setUser(userResponse.data);
-    return userResponse.data;
+    setToken(accessToken);
+    setUser(loggedInUser);
+
+    return loggedInUser;
   }
 
   function logout() {
