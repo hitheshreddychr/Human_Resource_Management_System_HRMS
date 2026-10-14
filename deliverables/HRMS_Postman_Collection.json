@@ -1,0 +1,216 @@
+﻿{
+  "info": {
+    "name": "HRMS API Collection",
+    "description": "Human Resource Management System API tests. Authenticate first and copy the access token into the collection variable.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api/v1"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "employee_id",
+      "value": "1"
+    },
+    {
+      "key": "payroll_id",
+      "value": "1"
+    },
+    {
+      "key": "salary_slip_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "REPLACE_WITH_YOUR_ADMIN_PASSWORD",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{base_url}}/auth/login"
+          }
+        },
+        {
+          "name": "Current User",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "List Employees",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/employees/"
+          }
+        },
+        {
+          "name": "Get Employee by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/employees/{{employee_id}}"
+          }
+        },
+        {
+          "name": "Export Employees CSV",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/reports/employees.csv"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "Check In",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/attendance/check-in"
+          }
+        },
+        {
+          "name": "Check Out",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/attendance/check-out"
+          }
+        },
+        {
+          "name": "My Attendance History",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/attendance/my-history"
+          }
+        },
+        {
+          "name": "List Attendance (Admin/HR)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/attendance/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave Management",
+      "item": [
+        {
+          "name": "My Leave Requests",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/leaves/my-requests"
+          }
+        },
+        {
+          "name": "List Leave Requests (Admin/HR)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/leaves/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payroll and Salary Slips",
+      "item": [
+        {
+          "name": "List Payroll",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/payroll/"
+          }
+        },
+        {
+          "name": "List Salary Slips",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/salary-slips/"
+          }
+        },
+        {
+          "name": "Download Salary Slip PDF",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/salary-slips/{{salary_slip_id}}/download"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "List Notifications",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/notifications/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports and Audit",
+      "item": [
+        {
+          "name": "Report Summary",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/reports/summary"
+          }
+        },
+        {
+          "name": "List Audit Logs (Admin)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/audit-logs/"
+          }
+        }
+      ]
+    }
+  ]
+}
