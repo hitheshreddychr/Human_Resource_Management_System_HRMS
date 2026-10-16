@@ -1,3 +1,4 @@
+﻿import "../../../styles/features/employees.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Users,
@@ -49,7 +50,7 @@ function getErrorMessage(error) {
 }
 
 function formatDate(value) {
-  if (!value) return "—";
+  if (!value) return "â€”";
 
   return new Date(`${value.slice(0, 10)}T00:00:00`).toLocaleDateString(
     "en-IN",
@@ -538,7 +539,7 @@ export default function EmployeesPage() {
                 </label>
 
                 <label>
-                  Annual salary (₹) *
+                  Annual salary (â‚¹) *
                   <input
                     name="annual_salary"
                     type="number"
@@ -581,3 +582,4 @@ export default function EmployeesPage() {
     </div>
   );
 }
+
